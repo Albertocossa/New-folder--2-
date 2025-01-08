@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Aluno</title>
+</head>
+<body>
+    <h1>Cadastro de Aluno</h1>
+    <form id="formCadastro">
+        <input type="text" id="nome" placeholder="Nome" required><br><br>
+        <input type="number" id="turma" placeholder="turma" required><br><br>
+       
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <script>
+        document.getElementById('formCadastro').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById('nome').value;
+            const turma = document.getElementById('turma').value;
+           
+
+            try {
+                const response = await fetch('/api/alunos/cadastro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ nome, turma })
+                });
+
+                const data = await response.json();
+                alert(data.message);
+            } catch (err) {
+                alert('Erro ao cadastrar aluno');
+            }
+        });
+    </script>
+</body>
+</html>
